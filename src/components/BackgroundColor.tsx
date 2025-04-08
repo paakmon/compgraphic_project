@@ -18,7 +18,7 @@ export function BackgroundColor({ setBgColor }: BackgroundColorProps) {
   };
 
   return (
-    <div className="px-5">
+    <div className="w-60">
       <h2 className="text-lg font-semibold text-blue-900">Background Color</h2>
       <div className="flex items-center space-x-4">
         <div className="flex space-x-5">

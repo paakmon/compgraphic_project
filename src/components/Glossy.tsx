@@ -18,6 +18,7 @@ export function Glossy() {
         onChange={handleChange}
         aria-label="Default slider"
         color="primary"
+        sx={{ width: "100%" }}
       />
     </div>
   );
