@@ -15,7 +15,7 @@ function Model() {
 
 export default function ModelViewer({ bgColor }: Props) {
     return (
-      <div className="fixed top-0 left-0 w-full h-screen z-0 pointer-events-auto">
+      <div style={{ width: "100%", height: "100vh", position: "fixed", top: 0, left: 0, zIndex: 0, pointerEvents: "auto", }}>
         <Canvas camera={{ position: [0, 1, 3] }}>
           <color attach="background" args={[bgColor]} />
           <ambientLight intensity={0.6} />

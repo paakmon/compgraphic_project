@@ -16,10 +16,10 @@ export default function RootLayout({
     <html lang="en" className="{raleway.className}">
       <body>
         <ModelViewer bgColor={bgColor} />
-        <div className="relative z-10">
-          <SideBar setBgColor={setBgColor} bgColor={bgColor} />
+        <div style={{ position: "relative", zIndex: 1 }}>
+            <SideBar setBgColor={setBgColor} bgColor={bgColor} />
         </div>
-          <main className="flex-1 p-4 pointer-events-auto">
+          <main className="flex-1 p-4" style={{ pointerEvents: "auto" }}>
             {children}
           </main>
       </body>
