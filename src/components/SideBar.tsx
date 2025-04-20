@@ -12,13 +12,16 @@ import { Glossy } from "./Glossy";
 import Outline from "./Outline";
 import { ColorFilter } from "./ColorFilter";
 import { BackgroundColor } from "./BackgroundColor";
+import { PixelSlider } from './PixelSlider';
 
 type SideBarProps = {
     setBgColor: (color: string) => void;
     bgColor: string;
+    setPixelSize: (size: number) => void;
+    pixelSize: number;
   };
 
-function SideBar({ setBgColor, bgColor }: SideBarProps) {
+function SideBar({ setBgColor, bgColor, setPixelSize, pixelSize} : SideBarProps) {
   const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);
@@ -43,9 +46,7 @@ function SideBar({ setBgColor, bgColor }: SideBarProps) {
               <Instructions/>
               <Divider/>
               <div className="flex flex-col items-start w-full gap-2">
-                <Glossy />
-                <Outline />
-                <ColorFilter />
+                <PixelSlider pixelSize={pixelSize} setPixelSize={setPixelSize}/>
               </div>
               <div>
                 <Divider />

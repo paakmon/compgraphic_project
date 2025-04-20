@@ -11,13 +11,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [bgColor, setBgColor] = useState("#000000");
+  const [pixelSize, setPixelSize] = useState(16);
 
   return (
     <html lang="en" className="{raleway.className}">
       <body>
-        <ModelViewer bgColor={bgColor} />
+        <ModelViewer bgColor={bgColor} pixelSize={pixelSize}/>
         <div style={{ position: "relative", zIndex: 1 }}>
-            <SideBar setBgColor={setBgColor} bgColor={bgColor} />
+            <SideBar 
+              setBgColor={setBgColor}
+              bgColor={bgColor}
+              setPixelSize={setPixelSize}
+              pixelSize={pixelSize} />
         </div>
           <main className="flex-1 p-4" style={{ pointerEvents: "auto" }}>
             {children}
