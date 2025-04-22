@@ -19,24 +19,24 @@ type SideBarProps = {
     bgColor: string;
     setPixelSize: (size: number) => void;
     pixelSize: number;
+    isOpen: boolean; // The state passed from the parent
+    onClose: () => void; // Function to close the sidebar
   };
 
-function SideBar({ setBgColor, bgColor, setPixelSize, pixelSize} : SideBarProps) {
+function SideBar({ setBgColor, bgColor, setPixelSize, pixelSize, isOpen, onClose } : SideBarProps) {
   const [sidebar, setSidebar] = useState(false);
-
-  const showSidebar = () => setSidebar(!sidebar);
-
+  
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
         <div className='navbar' style={{ backgroundColor: bgColor }}>
-          <Link href='#' className='menu-bars'>
+          {/* <Link href='#' className='menu-bars'>
             <FaIcons.FaBars onClick={showSidebar} style={{ color: '#1E3A8A' }}/>
-          </Link>
+          </Link> */}
         </div>
-        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
+        <nav className={isOpen ? 'nav-menu active' : 'nav-menu'}>
           <div className='nav-menu-items'>
-            <div className='navbar-toggle' onClick={showSidebar}>
+            <div className='navbar-toggle' onClick={onClose}>
               <Link href='#' className='menu-bars'>
                 <AiIcons.AiOutlineClose style={{ color: '#1E3A8A' }}/>
               </Link>
