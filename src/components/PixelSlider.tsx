@@ -20,8 +20,8 @@ export function PixelSlider({ pixelSize, setPixelSize }: PixelSliderProps) {
       <Slider
         value={pixelSize}
         onChange={handleChange}
-        min={1}
-        max={64}
+        min={8}
+        max={2048}
         aria-label="Pixel Size"
         color="primary"
         sx={{ width: "100%" }}

@@ -1,6 +1,6 @@
 "use client";
 
-import SideBar from '@/components/SideBar';
+import SideBar from "@/components/SideBar";
 import './globals.css';
 import { useState } from "react";
 import ModelViewer from "@/components/ModelViewer";
