@@ -13,6 +13,8 @@ import Outline from "./Outline";
 import { ColorFilter } from "./ColorFilter";
 import { BackgroundColor } from "./BackgroundColor";
 import { PixelSlider } from './PixelSlider';
+import CameratypeChang from './cameratypeChang';
+
 
 type SideBarProps = {
     setBgColor: (color: string) => void;
@@ -22,14 +24,17 @@ type SideBarProps = {
     isOpen: boolean; // The state passed from the parent
     onClose: () => void; // Function to close the sidebar
     setFilename: (name: string) => void;
+    useOrtho:boolean
+    SetOrtho: (useortho : boolean)=> void;
   };
 
-function SideBar({ setBgColor, setFilename, setPixelSize, pixelSize, isOpen, onClose } : SideBarProps) {
+function SideBar({ setBgColor, setFilename, setPixelSize, pixelSize, isOpen, onClose, useOrtho, SetOrtho } : SideBarProps) {
   const [sidebar, setSidebar] = useState(false);
   
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
+      
         <nav className={isOpen ? 'nav-menu active' : 'nav-menu'}>
           <div className='nav-menu-items'>
             <div className='navbar-toggle' onClick={onClose}>
@@ -51,6 +56,10 @@ function SideBar({ setBgColor, setFilename, setPixelSize, pixelSize, isOpen, onC
               <div>
                 <Divider />
                 <BackgroundColor setBgColor={setBgColor}/>
+                
+              </div>
+              <div>
+              <CameratypeChang useotho={useOrtho} setuseotho={SetOrtho}></CameratypeChang>
               </div>
             </div>
           </div>
