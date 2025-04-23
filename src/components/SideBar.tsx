@@ -21,19 +21,15 @@ type SideBarProps = {
     pixelSize: number;
     isOpen: boolean; // The state passed from the parent
     onClose: () => void; // Function to close the sidebar
+    setFilename: (name: string) => void;
   };
 
-function SideBar({ setBgColor, bgColor, setPixelSize, pixelSize, isOpen, onClose } : SideBarProps) {
+function SideBar({ setBgColor, setFilename, setPixelSize, pixelSize, isOpen, onClose } : SideBarProps) {
   const [sidebar, setSidebar] = useState(false);
   
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
-        <div className='navbar' style={{ backgroundColor: bgColor }}>
-          {/* <Link href='#' className='menu-bars'>
-            <FaIcons.FaBars onClick={showSidebar} style={{ color: '#1E3A8A' }}/>
-          </Link> */}
-        </div>
         <nav className={isOpen ? 'nav-menu active' : 'nav-menu'}>
           <div className='nav-menu-items'>
             <div className='navbar-toggle' onClick={onClose}>
@@ -42,7 +38,11 @@ function SideBar({ setBgColor, bgColor, setPixelSize, pixelSize, isOpen, onClose
               </Link>
             </div>
             <div className='px-6'>
-              <UploadButton/>
+              <UploadButton
+                onFileSelect={(file) => {
+                  setFilename(file.name);
+                }}
+              />
               <Instructions/>
               <Divider/>
               <div className="flex flex-col items-start w-full gap-2">

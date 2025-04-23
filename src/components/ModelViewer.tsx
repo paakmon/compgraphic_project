@@ -8,6 +8,7 @@ import { EffectComposer, Pixelation } from "@react-three/postprocessing";
 type Props = {
   bgColor: string;
   pixelSize: number;
+  isModelVisible: boolean;
 };
 
 function Model() {
@@ -26,7 +27,7 @@ function PixelatedEffect({ pixelSize }: { pixelSize: number }) {
   );
 }
 
-export default function ModelViewer({ bgColor, pixelSize }: Props) {
+export default function ModelViewer({ bgColor, pixelSize, isModelVisible }: Props) {
     return (
       <div style={{ width: "100%", height: "100vh", position: "fixed", top: 0, left: 0, zIndex: 0, pointerEvents: "auto", }}>
         <Canvas camera={{ position: [0, 1, 3] }}>
@@ -34,7 +35,7 @@ export default function ModelViewer({ bgColor, pixelSize }: Props) {
           <ambientLight intensity={0.6} />
           <directionalLight position={[2, 2, 2]} intensity={1} />
           <Suspense fallback={null}>
-            <Model />
+            { isModelVisible ? <Model /> : null }
           </Suspense>
           <OrbitControls />
           <PixelatedEffect pixelSize={pixelSize} />
