@@ -9,6 +9,7 @@ import { useState } from "react";
 type Props = {
   bgColor: string;
   pixelSize: number;
+  isModelVisible: boolean;
   useOrtho:boolean;
 };
 
@@ -43,7 +44,7 @@ function PixelatedEffect({ pixelSize }: { pixelSize: number }) {
   );
 }
 
-export default function ModelViewer({ bgColor, pixelSize, useOrtho }: Props) {
+export default function ModelViewer({ bgColor, pixelSize, isModelVisible, useOrtho }: Props) {
     
 
 
@@ -60,7 +61,7 @@ export default function ModelViewer({ bgColor, pixelSize, useOrtho }: Props) {
           <ambientLight intensity={0.6} />
           <directionalLight position={[2, 2, 2]} intensity={1} />
           <Suspense fallback={null}>
-            <Model />
+            { isModelVisible ? <Model /> : null }
           </Suspense>
           <OrbitControls />
           <PixelatedEffect pixelSize={pixelSize} />

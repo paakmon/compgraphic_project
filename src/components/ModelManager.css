@@ -14,6 +14,16 @@
     align-items: flex-end;
     /* background-color: #FFFFFF; */
   }
+
+  .ormenu-bars {
+    position: absolute;  /* Or fixed if you want it to stay when scrolling */
+    top: 50%;  /* Vertically center it, adjust as necessary */
+    right: 0;  /* Align to the right side */
+    margin-right: 2rem;  /* Optional: add space from the edge */
+    font-size: 2rem;
+    background: none;
+    transform: translateY(-50%);  /* To properly center the icon vertically */
+  }
   
   .rnav-menu {
     background-color: #FFFFFF;

@@ -1,9 +1,38 @@
-export function UploadButton() {
+import React, { useRef } from 'react';
+
+type UploadButtonProps = {
+  onFileSelect: (file: File) => void;
+};
+
+export function UploadButton({ onFileSelect }: UploadButtonProps) {
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      onFileSelect(file);
+    }
+  };
+
   return (
-    <button
-      className="h-10 w-60 px-6 py-2 bg-white text-blue-900 rounded-full border-2 border-blue-900 hover:bg-blue-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-900"
+    <>
+      <button
+        onClick={handleClick}
+        className="h-10 w-60 px-6 py-2 bg-white text-blue-900 rounded-full border-2 border-blue-900 hover:bg-blue-900 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-900"
       >
-      Upload File
-    </button>
+        Upload File
+      </button>
+      <input
+        type="file"
+        ref={fileInputRef}
+        onChange={handleChange}
+        accept=".obj, .fbx, .stl, .gltf, .glb"
+        className="hidden"
+      />
+    </>
   );
 }

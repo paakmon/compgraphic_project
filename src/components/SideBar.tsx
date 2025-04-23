@@ -23,11 +23,12 @@ type SideBarProps = {
     pixelSize: number;
     isOpen: boolean; // The state passed from the parent
     onClose: () => void; // Function to close the sidebar
+    setFilename: (name: string) => void;
     useOrtho:boolean
     SetOrtho: (useortho : boolean)=> void;
   };
 
-function SideBar({ setBgColor, bgColor, setPixelSize, pixelSize, isOpen, onClose, useOrtho, SetOrtho } : SideBarProps) {
+function SideBar({ setBgColor, setFilename, setPixelSize, pixelSize, isOpen, onClose, useOrtho, SetOrtho } : SideBarProps) {
   const [sidebar, setSidebar] = useState(false);
   
   return (
@@ -42,7 +43,11 @@ function SideBar({ setBgColor, bgColor, setPixelSize, pixelSize, isOpen, onClose
               </Link>
             </div>
             <div className='px-6'>
-              <UploadButton/>
+              <UploadButton
+                onFileSelect={(file) => {
+                  setFilename(file.name);
+                }}
+              />
               <Instructions/>
               <Divider/>
               <div className="flex flex-col items-start w-full gap-2">
