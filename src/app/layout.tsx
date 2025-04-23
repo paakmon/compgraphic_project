@@ -35,7 +35,6 @@ export default function RootLayout({
               onOpenRight={() => setRightOpen(!rightOpen)}
             />
             <SideBar 
-              
               setBgColor={setBgColor}
               bgColor={bgColor}
               setPixelSize={setPixelSize}
