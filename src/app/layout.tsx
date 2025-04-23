@@ -13,27 +13,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [bgColor, setBgColor] = useState("#000000");
-  const [pixelSize, setPixelSize] = useState(16);
+  const [pixelSize, setPixelSize] = useState(128);
   
   const [leftOpen, setLeftOpen] = useState(false);
   const [rightOpen, setRightOpen] = useState(false);
+  const [useOrtho, setUseOrtho] = useState(false);
 
   return (
     <html lang="en" className="{raleway.className}">
       <body>
-        <ModelViewer bgColor={bgColor} pixelSize={pixelSize}/>
+        <ModelViewer bgColor={bgColor} pixelSize={pixelSize} useOrtho={useOrtho}/>
         <div style={{ position: "relative", zIndex: 1 }}>
             <TopNavBar
               onOpenLeft={() => setLeftOpen(!leftOpen)}
               onOpenRight={() => setRightOpen(!rightOpen)}
             />
             <SideBar 
+              
               setBgColor={setBgColor}
               bgColor={bgColor}
               setPixelSize={setPixelSize}
               pixelSize={pixelSize} 
               isOpen={leftOpen} 
-              onClose={() => setLeftOpen(false)}/>
+              useOrtho={useOrtho}
+              onClose={() => setLeftOpen(false)}
+              SetOrtho={setUseOrtho}/>
             <RightSideBar 
             setBgColor={setBgColor}
             bgColor={bgColor} 

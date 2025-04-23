@@ -21,7 +21,7 @@ export function PixelSlider({ pixelSize, setPixelSize }: PixelSliderProps) {
         value={pixelSize}
         onChange={handleChange}
         min={8}
-        max={2048}
+        max={512}
         aria-label="Pixel Size"
         color="primary"
         sx={{ width: "100%" }}

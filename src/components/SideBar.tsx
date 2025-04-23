@@ -13,6 +13,8 @@ import Outline from "./Outline";
 import { ColorFilter } from "./ColorFilter";
 import { BackgroundColor } from "./BackgroundColor";
 import { PixelSlider } from './PixelSlider';
+import CameratypeChang from './cameratypeChang';
+
 
 type SideBarProps = {
     setBgColor: (color: string) => void;
@@ -21,19 +23,17 @@ type SideBarProps = {
     pixelSize: number;
     isOpen: boolean; // The state passed from the parent
     onClose: () => void; // Function to close the sidebar
+    useOrtho:boolean
+    SetOrtho: (useortho : boolean)=> void;
   };
 
-function SideBar({ setBgColor, bgColor, setPixelSize, pixelSize, isOpen, onClose } : SideBarProps) {
+function SideBar({ setBgColor, bgColor, setPixelSize, pixelSize, isOpen, onClose, useOrtho, SetOrtho } : SideBarProps) {
   const [sidebar, setSidebar] = useState(false);
   
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
-        <div className='navbar' style={{ backgroundColor: bgColor }}>
-          {/* <Link href='#' className='menu-bars'>
-            <FaIcons.FaBars onClick={showSidebar} style={{ color: '#1E3A8A' }}/>
-          </Link> */}
-        </div>
+      
         <nav className={isOpen ? 'nav-menu active' : 'nav-menu'}>
           <div className='nav-menu-items'>
             <div className='navbar-toggle' onClick={onClose}>
@@ -51,6 +51,10 @@ function SideBar({ setBgColor, bgColor, setPixelSize, pixelSize, isOpen, onClose
               <div>
                 <Divider />
                 <BackgroundColor setBgColor={setBgColor}/>
+                
+              </div>
+              <div>
+              <CameratypeChang useotho={useOrtho} setuseotho={SetOrtho}></CameratypeChang>
               </div>
             </div>
           </div>
