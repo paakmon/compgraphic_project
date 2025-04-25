@@ -18,9 +18,9 @@ export default function RootLayout({
   
   const [leftOpen, setLeftOpen] = useState(false);
   const [rightOpen, setRightOpen] = useState(false);
-  const [filename, setFilename] = useState('');
   const [isModelVisible, setIsModelVisible] = useState(true);
   const [useOrtho, setUseOrtho] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
 
   const [models, setModels] = useState<ModelItem[]>([
       {
@@ -30,6 +30,17 @@ export default function RootLayout({
         url: '/cheeseburger.glb',
       },
   ]);
+
+  const handleFileSelect = (file: File) => {
+    const url = URL.createObjectURL(file);
+    const newModel: ModelItem = {
+      _id: crypto.randomUUID(),
+      name: file.name,
+      url,
+      isVisible: true,
+    };
+    setModels((prev) => [...prev, newModel]);
+  };
 
   return (
     <html lang="en" className="{raleway.className}">
@@ -54,7 +65,7 @@ export default function RootLayout({
               useOrtho={useOrtho}
               onClose={() => setLeftOpen(false)}
               SetOrtho={setUseOrtho}
-              setFilename={setFilename}/>
+              onFileSelect={handleFileSelect}/>
             <ModelManager
               models={models}
               setModels={setModels}

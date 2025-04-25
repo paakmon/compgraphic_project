@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import * as FaIcons from 'react-icons/fa';
+import React from 'react';
 import * as AiIcons from 'react-icons/ai';
 import Link from 'next/link';
 import './SideBar.css';
@@ -8,9 +7,6 @@ import { IconContext } from 'react-icons';
 import { UploadButton } from "./UploadButton";
 import { Instructions } from "./Instructions";
 import { Divider } from "./Divider";
-import { Glossy } from "./Glossy";
-import Outline from "./Outline";
-import { ColorFilter } from "./ColorFilter";
 import { BackgroundColor } from "./BackgroundColor";
 import { PixelSlider } from './PixelSlider';
 import CameratypeChang from './cameratypeChang';
@@ -21,16 +17,15 @@ type SideBarProps = {
     bgColor: string;
     setPixelSize: (size: number) => void;
     pixelSize: number;
-    isOpen: boolean; // The state passed from the parent
-    onClose: () => void; // Function to close the sidebar
-    setFilename: (name: string) => void;
+    isOpen: boolean;
+    onClose: () => void;
     useOrtho:boolean
     SetOrtho: (useortho : boolean)=> void;
+    onFileSelect: (file: File) => void;
   };
 
-function SideBar({ setBgColor, setFilename, setPixelSize, pixelSize, isOpen, onClose, useOrtho, SetOrtho } : SideBarProps) {
-  const [sidebar, setSidebar] = useState(false);
-  
+function SideBar({ setBgColor, setPixelSize, pixelSize, isOpen, onClose, useOrtho, SetOrtho, onFileSelect } : SideBarProps) {
+
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
@@ -44,9 +39,7 @@ function SideBar({ setBgColor, setFilename, setPixelSize, pixelSize, isOpen, onC
             </div>
             <div className='px-6'>
               <UploadButton
-                onFileSelect={(file) => {
-                  setFilename(file.name);
-                }}
+                onFileSelect={onFileSelect}
               />
               <Instructions/>
               <Divider/>
@@ -56,7 +49,6 @@ function SideBar({ setBgColor, setFilename, setPixelSize, pixelSize, isOpen, onC
               <div>
                 <Divider />
                 <BackgroundColor setBgColor={setBgColor}/>
-                
               </div>
               <div>
               <CameratypeChang useotho={useOrtho} setuseotho={SetOrtho}></CameratypeChang>
