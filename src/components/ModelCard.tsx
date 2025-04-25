@@ -24,13 +24,12 @@ export function ModelCard({ modelItem, onVisibilityChange, onDelete, onSelect, i
         hover:bg-gray-100
         ${isSelected ? 'bg-blue-200 hover:bg-blue-300' : ''}
       `}>
-        <div className="flex justify-between items-center">
-          <div>
+        <div className="flex-col justify-between items-center">
             <h3 className="text-base font-semibold text-blue-900">{modelItem.name}</h3>
             
             <div className="flex justify-between items-center">
               {/* Visibility Toggle */}
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 right-2">
                 <span className="text-sm">Visible:</span>
                 <Checkbox
                   size="small"
@@ -62,7 +61,6 @@ export function ModelCard({ modelItem, onVisibilityChange, onDelete, onSelect, i
                 </IconButton>
               </div>
             </div>
-          </div>
         </div>
         <Divider />
       </div>
