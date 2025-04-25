@@ -4,17 +4,40 @@ import Link from 'next/link';
 import './ModelManager.css'; // Import your CSS file for styling
 import { IconContext } from 'react-icons';
 import Checkbox from '@mui/material/Checkbox';
+import { ModelCard } from './ModelCard';
+import { Divider } from './Divider';
+import { ModelItem } from '@/interface';
 
 type SideBarProps = {
   isOpen: boolean;
   onClose: () => void;
-  filename?: string;
-  isModelVisible: boolean;
-  setIsModelVisible: (visible: boolean) => void;
-  // setFilename: (name: string) => void;
 };
 
-function ModelManager({ isOpen, onClose, filename, isModelVisible, setIsModelVisible }: SideBarProps) { 
+function ModelManager({ isOpen, onClose }: SideBarProps) {
+  const [models, setModels] = useState<ModelItem[]>([
+    {
+      _id: 'preload-1',
+      name: 'Simple Cheeseburger by Erik Woods',
+      isVisible: true,
+      url: '', // optional if it's already in the scene
+    },
+  ]);
+
+  const handleVisibilityChange = (id: string) => {
+    setModels((prev) =>
+      prev.map((m) =>
+        m._id === id ? { ...m, isVisible: !m.isVisible } : m
+      )
+    );
+  };
+
+  const deleteModel = (id: string) => {
+    const confirm = window.confirm("Are you sure you want to delete this model?");
+    if (confirm) {
+      setModels(models.filter((m) => m._id !== id));
+    }
+  };
+
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
@@ -27,17 +50,17 @@ function ModelManager({ isOpen, onClose, filename, isModelVisible, setIsModelVis
             </div>
             <div className='px-6'>
               <h2 className="text-2xl font-semibold text-blue-900">Model Manager</h2>
-              <h2 className="text-lg font-semibold text-blue-900">Filename:</h2>
-              <p className="text-lg text-blue-900 px-6">
-                {filename ? filename : 'cheeseburger.glb'}
-              </p>
-              <div className="flex items-center">
-                <h2 className="text-lg font-semibold text-blue-900">Hide model</h2>
-                <Checkbox
-                  checked={!isModelVisible}
-                  onChange={(e) => setIsModelVisible(!e.target.checked)}
+              <Divider/>
+              
+              {models.map((model) => (
+                <ModelCard
+                  key={model._id}
+                  modelItem={model}
+                  onVisibilityChange={handleVisibilityChange}
+                  onDelete={deleteModel}
                 />
-              </div>
+              ))}
+              
             </div>
           </div>
         </nav>
