@@ -1,3 +1,13 @@
+/**
+ * UploadButton component
+ *
+ * Renders a styled button that opens a hidden file input when clicked.
+ * Accepts 3D model files (.glb) and calls the
+ * onFileSelect callback with the selected file.
+ *
+ * Used for triggering file uploads from components like sidebars.
+ */
+
 import React, { useRef } from 'react';
 
 type UploadButtonProps = {
@@ -30,7 +40,7 @@ export function UploadButton({ onFileSelect }: UploadButtonProps) {
         type="file"
         ref={fileInputRef}
         onChange={handleChange}
-        accept=".obj, .fbx, .stl, .gltf, .glb"
+        accept=".glb"
         className="hidden"
       />
     </>

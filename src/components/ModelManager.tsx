@@ -1,9 +1,26 @@
-import React, { useState, useEffect } from 'react';
+/**
+ * ModelManager component
+ *
+ * This component renders the right sidebar (Model Manager) for managing uploaded 3D models.
+ * Users can:
+ * - Toggle model visibility
+ * - Delete individual models with confirmation
+ *
+ * Props:
+ * - models: Array of uploaded model data
+ * - setModels: State setter to update the models array
+ * - isOpen: Boolean indicating sidebar visibility
+ * - onClose: Function to close the sidebar
+ *
+ * Internally maps each model to a ModelCard, which handles per-model actions.
+ */
+
+
+import React from 'react';
 import * as AiIcons from 'react-icons/ai';
 import Link from 'next/link';
-import './ModelManager.css'; // Import your CSS file for styling
+import './ModelManager.css';
 import { IconContext } from 'react-icons';
-import Checkbox from '@mui/material/Checkbox';
 import { ModelCard } from './ModelCard';
 import { Divider } from './Divider';
 import { ModelItem } from '@/interface';
@@ -45,7 +62,7 @@ function ModelManager({ models, setModels, isOpen, onClose }: ModelManagerProps)
             <div className='px-6'>
               <h2 className="text-2xl font-semibold text-blue-900">Model Manager</h2>
               <Divider/>
-              
+              {/* Map model list to ModelCard components */}
               {models.map((model) => (
                 <ModelCard
                   key={model._id}

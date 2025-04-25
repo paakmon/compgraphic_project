@@ -1,3 +1,26 @@
+/**
+ * SideBar component
+ *
+ * This component renders the left sidebar UI containing tools and settings for the 3D model viewer.
+ * It includes:
+ * - UploadButton: Allows uploading a 3D model file
+ * - Instructions: Displays usage instructions
+ * - PixelSlider: Adjusts pixelation effect
+ * - BackgroundColor: Changes the background color of the canvas
+ * - CameratypeChang: Switches between orthographic and perspective camera views
+ *
+ * Props:
+ * - setBgColor: Function to update the background color
+ * - bgColor: Current background color
+ * - setPixelSize: Function to update pixel size
+ * - pixelSize: Current pixel size
+ * - isOpen: Sidebar visibility state
+ * - onClose: Closes the sidebar
+ * - useOrtho: Current camera type state (true = orthographic)
+ * - SetOrtho: Function to change camera type
+ * - onFileSelect: Function triggered when a file is selected for upload
+ */
+
 import React from 'react';
 import * as AiIcons from 'react-icons/ai';
 import Link from 'next/link';
