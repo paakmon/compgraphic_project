@@ -8,20 +8,14 @@ import { ModelCard } from './ModelCard';
 import { Divider } from './Divider';
 import { ModelItem } from '@/interface';
 
-type SideBarProps = {
+type ModelManagerProps = {
+  models: ModelItem[];
+  setModels: React.Dispatch<React.SetStateAction<ModelItem[]>>;
   isOpen: boolean;
   onClose: () => void;
 };
 
-function ModelManager({ isOpen, onClose }: SideBarProps) {
-  const [models, setModels] = useState<ModelItem[]>([
-    {
-      _id: 'preload-1',
-      name: 'Simple Cheeseburger by Erik Woods',
-      isVisible: true,
-      url: '', // optional if it's already in the scene
-    },
-  ]);
+function ModelManager({ models, setModels, isOpen, onClose }: ModelManagerProps) {
 
   const handleVisibilityChange = (id: string) => {
     setModels((prev) =>

@@ -5,17 +5,20 @@ import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import { Suspense } from "react";
 import { EffectComposer, Pixelation } from "@react-three/postprocessing";
-import { useState } from "react";
+import { ModelItem } from "@/interface";
+
 type Props = {
+  models: ModelItem[];
   bgColor: string;
   pixelSize: number;
   isModelVisible: boolean;
   useOrtho:boolean;
 };
 
-function Model() {
-  const { scene } = useGLTF("/cheeseburger.glb");
-  return <primitive object={scene} scale={1} />;
+function ModelLoader({ url, name }: { url: string; name: string }) {
+  const { scene } = useGLTF(url);
+  scene.name = name;
+  return <primitive object={scene} />;
 }
 
 function CameraChecker() {
@@ -33,9 +36,9 @@ function CameraChecker() {
 }
 
 function PixelatedEffect({ pixelSize }: { pixelSize: number }) {
+  // Get the size of the canvas and calculate granularity based on pixelSize
   const { size } = useThree();
   const granularity = Math.max(1, Math.floor(size.width / pixelSize)); // prevent 0
- 
 
   return (
     <EffectComposer>
@@ -44,10 +47,7 @@ function PixelatedEffect({ pixelSize }: { pixelSize: number }) {
   );
 }
 
-export default function ModelViewer({ bgColor, pixelSize, isModelVisible, useOrtho }: Props) {
-    
-
-
+export default function ModelViewer({ models, bgColor, pixelSize, useOrtho }: Props ) {
     return (
       <div style={{ width: "100%", height: "100vh", position: "fixed", top: 0, left: 0, zIndex: 0, pointerEvents: "auto", }}>
         <Canvas 
@@ -60,9 +60,16 @@ export default function ModelViewer({ bgColor, pixelSize, isModelVisible, useOrt
           <color attach="background" args={[bgColor]} />
           <ambientLight intensity={0.6} />
           <directionalLight position={[2, 2, 2]} intensity={1} />
-          <Suspense fallback={null}>
-            { isModelVisible ? <Model /> : null }
-          </Suspense>
+
+          {/* Render models */}
+          {models.map((model) =>
+          model.isVisible ? (
+            <Suspense fallback={null} key={model._id}>
+              <ModelLoader url={model.url} name={model._id} />
+            </Suspense>
+          ) : null
+          )}
+
           <OrbitControls />
           <PixelatedEffect pixelSize={pixelSize} />
         </Canvas>

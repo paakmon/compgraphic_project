@@ -6,6 +6,7 @@ import { useState } from "react";
 import ModelViewer from "@/components/ModelViewer";
 import ModelManager from '@/components/ModelManager';
 import TopNavBar from "@/components/TopNavBar";
+import { ModelItem } from "../interface";
 
 export default function RootLayout({
   children,
@@ -21,10 +22,20 @@ export default function RootLayout({
   const [isModelVisible, setIsModelVisible] = useState(true);
   const [useOrtho, setUseOrtho] = useState(false);
 
+  const [models, setModels] = useState<ModelItem[]>([
+      {
+        _id: 'preload-1',
+        name: 'Simple Cheeseburger by Erik Woods',
+        isVisible: true,
+        url: '/cheeseburger.glb',
+      },
+  ]);
+
   return (
     <html lang="en" className="{raleway.className}">
       <body>
-        <ModelViewer 
+        <ModelViewer
+          models={models}
           bgColor={bgColor} 
           pixelSize={pixelSize}
           isModelVisible={isModelVisible} 
@@ -44,13 +55,12 @@ export default function RootLayout({
               onClose={() => setLeftOpen(false)}
               SetOrtho={setUseOrtho}
               setFilename={setFilename}/>
-            <ModelManager 
+            <ModelManager
+              models={models}
+              setModels={setModels}
               isOpen={rightOpen} 
               onClose={() => setRightOpen(false)}
-              filename={filename}
-              isModelVisible={isModelVisible}
-              setIsModelVisible={setIsModelVisible}
-              /*setFilename={setFilename}*//>
+              />
         </div>
           <main className="flex-1 p-4" style={{ pointerEvents: "auto" }}>
             {children}
