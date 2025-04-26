@@ -31,6 +31,12 @@ export default function RootLayout({
       },
   ]);
 
+  const [selectedModelId, setSelectedModelId] = useState<string | null>(null);
+
+  const handleSelect = (id: string) => {
+    setSelectedModelId(prev => (prev === id ? null : id));
+  };
+
   const handleFileSelect = (file: File) => {
     const url = URL.createObjectURL(file);
     const newModel: ModelItem = {
@@ -69,6 +75,8 @@ export default function RootLayout({
             <ModelManager
               models={models}
               setModels={setModels}
+              selectedModelId={selectedModelId}
+              setSelectedModelId={setSelectedModelId}
               isOpen={rightOpen} 
               onClose={() => setRightOpen(false)}
               />

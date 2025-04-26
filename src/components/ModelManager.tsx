@@ -28,11 +28,13 @@ import { ModelItem } from '@/interface';
 type ModelManagerProps = {
   models: ModelItem[];
   setModels: React.Dispatch<React.SetStateAction<ModelItem[]>>;
+  selectedModelId: string | null;
+  setSelectedModelId: (id: string) => void;
   isOpen: boolean;
   onClose: () => void;
 };
 
-function ModelManager({ models, setModels, isOpen, onClose }: ModelManagerProps) {
+function ModelManager({ models, setModels, selectedModelId, setSelectedModelId, isOpen, onClose }: ModelManagerProps) {
 
   const handleVisibilityChange = (id: string) => {
     setModels((prev) =>
@@ -45,7 +47,7 @@ function ModelManager({ models, setModels, isOpen, onClose }: ModelManagerProps)
   const deleteModel = (id: string) => {
     const confirm = window.confirm("Are you sure you want to delete this model?");
     if (confirm) {
-      setModels(models.filter((m) => m._id !== id));
+      setModels(prev => prev.filter((m) => m._id !== id));
     }
   };
 
@@ -67,6 +69,8 @@ function ModelManager({ models, setModels, isOpen, onClose }: ModelManagerProps)
                 <ModelCard
                   key={model._id}
                   modelItem={model}
+                  onSelect={setSelectedModelId}
+                  isSelected={selectedModelId === model._id}
                   onVisibilityChange={handleVisibilityChange}
                   onDelete={deleteModel}
                 />
