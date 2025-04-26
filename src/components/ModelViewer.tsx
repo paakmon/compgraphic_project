@@ -12,6 +12,8 @@ import {  useAnimations, Outlines, Environment } from '@react-three/drei'
 
 type Props = {
   models: ModelItem[];
+  selectedModelId: string | null;
+  setSelectedModelId: (id: string | null) => void;
   bgColor: string;
   pixelSize: number;
   isModelVisible: boolean;
@@ -106,10 +108,13 @@ export default function ModelViewer({ models, bgColor, pixelSize, useOrtho }: Pr
       model.isVisible ? (
         <Suspense fallback={null} key={model._id}>
           <ModelLoader 
+            key={model._id}
             url={model.url} 
+
             name={model._id} 
             outlinethickness={model.outLineThickness}
             outlineColor={model.outlineColor}
+
             isOutlined={model.isOutline} // dynamic outlines!
           />
         </Suspense>

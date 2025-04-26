@@ -1,7 +1,7 @@
 import { ModelItem } from "@/interface";
 import { Divider } from "./Divider";
 import Checkbox from '@mui/material/Checkbox';
-import { IconButton, Tooltip } from "@mui/material";
+import { IconButton } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -30,8 +30,8 @@ export function ModelCard({
         onClick={() => onSelect?.(modelItem?._id)}
         className={`w-full text-blue-900 rounded-lg shadow cursor-pointer 
         transition-colors duration-200
-        hover:bg-gray-100
-        ${isSelected ? 'bg-blue-200 hover:bg-blue-300' : ''}
+        hover:bg-gray-300
+        ${isSelected ? 'bg-blue-200 hover:bg-blue-200' : ''}
       `}>
         <div className="flex-col justify-between items-center">
             <h3 className="text-base font-semibold text-blue-900">{modelItem.name}</h3>

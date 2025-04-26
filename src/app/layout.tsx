@@ -7,7 +7,6 @@ import ModelViewer from "@/components/ModelViewer";
 import ModelManager from '@/components/ModelManager';
 import TopNavBar from "@/components/TopNavBar";
 import { ModelItem } from "../interface";
-import CubeWithOutline from "@/components/CubeWithOutline";
 
 export default function RootLayout({
   children,
@@ -36,6 +35,8 @@ export default function RootLayout({
       },
   ]);
 
+  const [selectedModelId, setSelectedModelId] = useState<string | null>(null);
+
   const handleFileSelect = (file: File) => {
     const url = URL.createObjectURL(file);
     const newModel: ModelItem = {
@@ -57,6 +58,8 @@ export default function RootLayout({
       <body>
         <ModelViewer
           models={models}
+          selectedModelId={selectedModelId}
+          setSelectedModelId={setSelectedModelId}
           bgColor={bgColor} 
           pixelSize={pixelSize}
           isModelVisible={isModelVisible}           
@@ -83,6 +86,8 @@ export default function RootLayout({
             <ModelManager
               models={models}
               setModels={setModels}
+              selectedModelId={selectedModelId}
+              setSelectedModelId={setSelectedModelId}
               isOpen={rightOpen} 
               onClose={() => setRightOpen(false)}
               />
