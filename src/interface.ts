@@ -4,4 +4,6 @@ export interface ModelItem {
     url: string;
     isVisible: boolean;
     thumbnailUrl?: string;
+    isOutline: boolean;
+    ref:any
 }

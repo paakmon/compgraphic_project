@@ -2,11 +2,12 @@
 
 import SideBar from "@/components/SideBar";
 import './globals.css';
-import { useState } from "react";
+import { useState, createRef } from "react";
 import ModelViewer from "@/components/ModelViewer";
 import ModelManager from '@/components/ModelManager';
 import TopNavBar from "@/components/TopNavBar";
 import { ModelItem } from "../interface";
+import CubeWithOutline from "@/components/CubeWithOutline";
 
 export default function RootLayout({
   children,
@@ -19,6 +20,7 @@ export default function RootLayout({
   const [leftOpen, setLeftOpen] = useState(false);
   const [rightOpen, setRightOpen] = useState(false);
   const [isModelVisible, setIsModelVisible] = useState(true);
+  const [ismodelOutline, setismodelOutline] = useState(false);
   const [useOrtho, setUseOrtho] = useState(false);
   const [file, setFile] = useState<File | null>(null);
 
@@ -28,6 +30,8 @@ export default function RootLayout({
         name: 'Simple Cheeseburger by Erik Woods',
         isVisible: true,
         url: '/cheeseburger.glb',
+        isOutline: false,
+        ref: createRef()
       },
   ]);
 
@@ -38,8 +42,11 @@ export default function RootLayout({
       name: file.name,
       url,
       isVisible: true,
+      isOutline:false,
+      ref: createRef()
     };
     setModels((prev) => [...prev, newModel]);
+    
   };
 
   return (
@@ -49,8 +56,12 @@ export default function RootLayout({
           models={models}
           bgColor={bgColor} 
           pixelSize={pixelSize}
-          isModelVisible={isModelVisible} 
-          useOrtho={useOrtho}/>
+          isModelVisible={isModelVisible}           
+          useOrtho={useOrtho}
+          ismodelOutline={ismodelOutline}
+          />
+          
+           {/* <CubeWithOutline/> */}
         <div style={{ position: "relative", zIndex: 1 }}>
             <TopNavBar
               onOpenLeft={() => setLeftOpen(!leftOpen)}
