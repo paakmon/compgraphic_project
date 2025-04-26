@@ -5,5 +5,6 @@ export interface ModelItem {
     isVisible: boolean;
     thumbnailUrl?: string;
     isOutline: boolean;
-    ref:any
+    outLineThickness: number;
+    outlineColor: string;
 }

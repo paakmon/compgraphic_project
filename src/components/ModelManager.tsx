@@ -50,7 +50,22 @@ function ModelManager({ models, setModels, isOpen, onClose }: ModelManagerProps)
       )
     );
   }
-
+  const handleOutlineThicknessChange = (id : string,input : number) => {
+   
+     setModels((prev) =>
+       prev.map((m) =>
+         m._id === id ? { ...m, outLineThickness: input } : m
+       )
+     );
+   }
+   const handleOutlineColorChange = (id : string,input : string) => {
+   
+    setModels((prev) =>
+      prev.map((m) =>
+        m._id === id ? { ...m, outlineColor: input } : m
+      )
+    );
+  }
   const deleteModel = (id: string) => {
     const confirm = window.confirm("Are you sure you want to delete this model?");
     if (confirm) {
@@ -79,6 +94,8 @@ function ModelManager({ models, setModels, isOpen, onClose }: ModelManagerProps)
                   onVisibilityChange={handleVisibilityChange}
                   onDelete={deleteModel}
                   onOutlineChange = {handleOutlineChange}
+                  onOutlineThicknessChange = {handleOutlineThicknessChange }
+                  onOutlineColorChangle = {handleOutlineColorChange}
                 />
               ))}
               

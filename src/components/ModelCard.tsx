@@ -7,6 +7,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import CropSquareIcon from '@mui/icons-material/CropSquare';
 import SelectAllIcon from '@mui/icons-material/SelectAll';
+import Slider from '@mui/material/Slider';
 import React from "react";
 
 interface ModelCardProps {
@@ -16,9 +17,14 @@ interface ModelCardProps {
     onOutlineChange: (id: string) => void;
     onSelect?: (id: string) => void;
     isSelected?: boolean;
+    onOutlineThicknessChange: (id:string, input : number) => void;
+    onOutlineColorChangle: (id:string , input : string )=> void;
 }
 
-export function ModelCard({ modelItem, onVisibilityChange, onDelete, onSelect, isSelected, onOutlineChange}: ModelCardProps) {
+export function ModelCard({ 
+  modelItem, onVisibilityChange, onDelete,
+   onSelect, isSelected, onOutlineChange,
+    onOutlineThicknessChange, onOutlineColorChangle}: ModelCardProps) {
     return (
       <div 
         onClick={() => onSelect?.(modelItem?._id)}
@@ -79,6 +85,33 @@ export function ModelCard({ modelItem, onVisibilityChange, onDelete, onSelect, i
                 </IconButton>
               </div>
             </div>
+        </div>
+        <div className="flex-col justify-between items-center">
+          {/*outline thickness slider */}
+        Outline thickness: 
+        <Slider 
+        defaultValue={13}
+         min={1} max ={250}
+          aria-label="Default"
+          onChange={(e, value) => {
+            e.stopPropagation();
+            onOutlineThicknessChange(modelItem._id, typeof value === 'number' ? value : 13);
+          }}
+           valueLabelDisplay="auto" />
+
+        <div className="flex items-center">
+           {/*outline thickness slider */}
+          Outline Color :
+        <img src="/color-picker.svg" alt="color" className="h-6 w-6 m-0" />
+        <input
+          type="color"
+          onChange={(e) => {
+            e.stopPropagation();
+            onOutlineColorChangle(modelItem._id, e.target.value)
+          }}
+          className="h-8 w-8 appearance-none p-0 border-none"
+        />
+        </div>
         </div>
         <Divider />
       </div>

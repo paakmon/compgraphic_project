@@ -20,11 +20,12 @@ type Props = {
  
 };
 
-function ModelLoader({ url, name, isOutlined }: {
+function ModelLoader({ url, name, isOutlined, outlinethickness, outlineColor }: {
   url: string;
   name: string;
- 
   isOutlined: boolean;
+  outlinethickness: number;
+  outlineColor: string;
 }) {
   const ref = useRef();
   const { nodes, materials } = useGLTF(url);
@@ -47,7 +48,7 @@ function ModelLoader({ url, name, isOutlined }: {
         receiveShadow
         
         >
-            {isOutlined && <Outlines thickness={10} color="#177e89"/>}
+            {isOutlined && <Outlines thickness={outlinethickness} color={outlineColor}/>}
         </mesh>
       )
     )}
@@ -107,7 +108,8 @@ export default function ModelViewer({ models, bgColor, pixelSize, useOrtho }: Pr
           <ModelLoader 
             url={model.url} 
             name={model._id} 
-            
+            outlinethickness={model.outLineThickness}
+            outlineColor={model.outlineColor}
             isOutlined={model.isOutline} // dynamic outlines!
           />
         </Suspense>

@@ -31,7 +31,8 @@ export default function RootLayout({
         isVisible: true,
         url: '/cheeseburger.glb',
         isOutline: false,
-        ref: createRef()
+        outLineThickness: 13,
+        outlineColor : "#1b261e"
       },
   ]);
 
@@ -43,7 +44,9 @@ export default function RootLayout({
       url,
       isVisible: true,
       isOutline:false,
-      ref: createRef()
+      outLineThickness: 15,
+        outlineColor : "#1b261e"
+      
     };
     setModels((prev) => [...prev, newModel]);
     
