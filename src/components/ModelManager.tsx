@@ -37,12 +37,21 @@ type ModelManagerProps = {
 function ModelManager({ models, setModels, selectedModelId, setSelectedModelId, isOpen, onClose }: ModelManagerProps) {
 
   const handleVisibilityChange = (id: string) => {
+  
     setModels((prev) =>
       prev.map((m) =>
         m._id === id ? { ...m, isVisible: !m.isVisible } : m
       )
     );
   };
+  const handleOutlineChange = (id : string) => {
+   console.log("change outline at", id)
+    setModels((prev) =>
+      prev.map((m) =>
+        m._id === id ? { ...m, isOutline: !m.isOutline } : m
+      )
+    );
+  }
 
   const deleteModel = (id: string) => {
     const confirm = window.confirm("Are you sure you want to delete this model?");
@@ -73,6 +82,7 @@ function ModelManager({ models, setModels, selectedModelId, setSelectedModelId, 
                   isSelected={selectedModelId === model._id}
                   onVisibilityChange={handleVisibilityChange}
                   onDelete={deleteModel}
+                  onOutlineChange = {handleOutlineChange}
                 />
               ))}
               

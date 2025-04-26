@@ -14,7 +14,7 @@ function CameratypeChang({ useotho, setuseotho }: useothoprop) {
 
   const handleChange = (event) => {
     setuseotho(event.target.checked)
-    console.log(event.target.checked)
+   
   }
 
   return (

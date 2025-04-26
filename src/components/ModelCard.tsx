@@ -5,17 +5,20 @@ import { IconButton } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import CropSquareIcon from '@mui/icons-material/CropSquare';
+import SelectAllIcon from '@mui/icons-material/SelectAll';
 import React from "react";
 
 interface ModelCardProps {
     modelItem: ModelItem;
     onDelete: (id: string) => void;
     onVisibilityChange: (id: string) => void;
+    onOutlineChange: (id: string) => void;
     onSelect?: (id: string) => void;
     isSelected?: boolean;
 }
 
-export function ModelCard({ modelItem, onVisibilityChange, onDelete, onSelect, isSelected}: ModelCardProps) {
+export function ModelCard({ modelItem, onVisibilityChange, onDelete, onSelect, isSelected, onOutlineChange}: ModelCardProps) {
     return (
       <div 
         onClick={() => onSelect?.(modelItem?._id)}
@@ -39,6 +42,21 @@ export function ModelCard({ modelItem, onVisibilityChange, onDelete, onSelect, i
                   onChange={(e) => {
                     e.stopPropagation();
                     onVisibilityChange(modelItem._id);
+                  }}
+                />
+              </div>
+               {/* Outline Toggle */}
+               <div className="flex items-center space-x-2 right-2">
+                <span className="text-sm">Outline:</span>
+                <Checkbox
+                  size="small"
+                  checked={modelItem.isOutline}
+                  icon={<SelectAllIcon />}
+                  checkedIcon={<CropSquareIcon />}
+                  onChange={(e) => {
+                 
+                     e.stopPropagation()
+                    onOutlineChange(modelItem._id);
                   }}
                 />
               </div>

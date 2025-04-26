@@ -3,9 +3,12 @@ import { useEffect } from "react";
 import * as THREE from "three";
 import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls, useGLTF } from "@react-three/drei";
-import { Suspense } from "react";
-import { EffectComposer, Pixelation } from "@react-three/postprocessing";
+import { Suspense, useRef } from "react";
+import { EffectComposer, Pixelation, Selection, Outline } from "@react-three/postprocessing";
 import { ModelItem } from "@/interface";
+import {  useAnimations, Outlines, Environment } from '@react-three/drei'
+
+
 
 type Props = {
   models: ModelItem[];
@@ -13,14 +16,45 @@ type Props = {
   pixelSize: number;
   isModelVisible: boolean;
   useOrtho:boolean;
+  ismodelOutline:boolean;
+ 
 };
 
-function ModelLoader({ url, name }: { url: string; name: string }) {
-  const { scene } = useGLTF(url);
-  scene.name = name;
-  return <primitive object={scene} />;
-}
+function ModelLoader({ url, name, isOutlined }: {
+  url: string;
+  name: string;
+ 
+  isOutlined: boolean;
+}) {
+  const ref = useRef();
+  const { nodes, materials } = useGLTF(url);
+ console.log("nodes", nodes);
+ console.log("material", materials);
 
+  return (
+    <group ref={ref}>
+    {Object.values(nodes).map((node, index) => 
+    
+      node.isMesh && (
+        <mesh
+        key={index}
+        geometry={node.geometry}
+        material={node.material}
+        position={node.position}
+        rotation={node.rotation}
+        scale={node.scale}
+        castShadow
+        receiveShadow
+        
+        >
+            {isOutlined && <Outlines thickness={10} color="#177e89"/>}
+        </mesh>
+      )
+    )}
+    
+  </group>
+  );
+}
 function CameraChecker() {
   const { camera } = useThree();
 
@@ -48,31 +82,41 @@ function PixelatedEffect({ pixelSize }: { pixelSize: number }) {
 }
 
 export default function ModelViewer({ models, bgColor, pixelSize, useOrtho }: Props ) {
+
+  
+ 
+ 
     return (
-      <div style={{ width: "100%", height: "100vh", position: "fixed", top: 0, left: 0, zIndex: 0, pointerEvents: "auto", }}>
-        <Canvas 
-        key={useOrtho ? "ortho" : "persp"}
-        orthographic={useOrtho}
-        camera={{ position: [0, 1, 3] 
-          ,zoom:useOrtho ? 150 : 1
-        }}>
-          <CameraChecker />
-          <color attach="background" args={[bgColor]} />
-          <ambientLight intensity={0.6} />
-          <directionalLight position={[2, 2, 2]} intensity={1} />
+      <div style={{ width: "100vw", height: "100vh", position: "fixed", top: 0, left: 0, zIndex: 0, pointerEvents: "auto", overflow: "hidden" }}>
+  <Canvas
+    key={useOrtho ? "ortho" : "persp"}
+    orthographic={useOrtho}
+    camera={{
+      position: [0, 1, 3],
+      zoom: useOrtho ? 150 : 1,
+    }}
+  >
+    <CameraChecker />
+    <color attach="background" args={[bgColor]} />
+    <ambientLight intensity={0.6} />
+    <directionalLight position={[2, 2, 2]} intensity={1} />
 
-          {/* Render models */}
-          {models.map((model) =>
-          model.isVisible ? (
-            <Suspense fallback={null} key={model._id}>
-              <ModelLoader url={model.url} name={model._id} />
-            </Suspense>
-          ) : null
-          )}
+    {models.map((model) =>
+      model.isVisible ? (
+        <Suspense fallback={null} key={model._id}>
+          <ModelLoader 
+            url={model.url} 
+            name={model._id} 
+            
+            isOutlined={model.isOutline} // dynamic outlines!
+          />
+        </Suspense>
+      ) : null
+    )}
 
-          <OrbitControls />
-          <PixelatedEffect pixelSize={pixelSize} />
-        </Canvas>
-      </div>
+    <OrbitControls />
+    <PixelatedEffect pixelSize={pixelSize} />
+  </Canvas>
+</div>
     );
   }
