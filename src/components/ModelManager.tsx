@@ -29,12 +29,15 @@ type ModelManagerProps = {
   models: ModelItem[];
   setModels: React.Dispatch<React.SetStateAction<ModelItem[]>>;
   selectedModelId: string | null;
-  setSelectedModelId: (id: string) => void;
+  setSelectedModelId: (id: string | null) => void;
   isOpen: boolean;
   onClose: () => void;
 };
 
 function ModelManager({ models, setModels, selectedModelId, setSelectedModelId, isOpen, onClose }: ModelManagerProps) {
+  const handleSelect = (id: string) => {
+    setSelectedModelId((prevSelectedId) => prevSelectedId === id ? null : id);
+  };
 
   const handleVisibilityChange = (id: string) => {
   
@@ -78,7 +81,7 @@ function ModelManager({ models, setModels, selectedModelId, setSelectedModelId, 
                 <ModelCard
                   key={model._id}
                   modelItem={model}
-                  onSelect={setSelectedModelId}
+                  onSelect={() => handleSelect(model._id)}
                   isSelected={selectedModelId === model._id}
                   onVisibilityChange={handleVisibilityChange}
                   onDelete={deleteModel}
