@@ -12,6 +12,7 @@ import ModelControl from "@/controls/ModelControl";
 
 type Props = {
   models: ModelItem[];
+  setModels: React.Dispatch<React.SetStateAction<ModelItem[]>>;
   selectedModelId: string | null;
   setSelectedModelId: (id: string | null) => void;
   bgColor: string;
@@ -22,15 +23,17 @@ type Props = {
  
 };
 
-function ModelLoader({ url, name, isOutlined, outlinethickness, outlineColor }: {
+function ModelLoader({ url, name, isOutlined, outlinethickness, outlineColor, modelTransform }: {
   url: string;
   name: string;
   isOutlined: boolean;
   outlinethickness: number;
   outlineColor: string;
+  modelTransform: { position: [number, number, number]; rotation: [number, number, number]; scale: [number, number, number] };
 }) {
   const ref = useRef<THREE.Group>(null!);
-  const { nodes, materials } = useGLTF(url);
+  const { scene } = useThree();
+  const { nodes, materials, scene: gltfScene } = useGLTF(url);
 
   useEffect(() => {
     if (ref.current) {
@@ -38,26 +41,34 @@ function ModelLoader({ url, name, isOutlined, outlinethickness, outlineColor }: 
     }
   }, [name]);
 
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.position.set(...modelTransform.position);
+      ref.current.rotation.set(...modelTransform.rotation);
+      ref.current.scale.set(...modelTransform.scale);
+    }
+  }, [modelTransform]);
+
   return (
     <group ref={ref}>
-    {Object.values(nodes).map((node, index) => 
-    
-      node.isMesh && (
-        <mesh
-        key={index}
-        geometry={node.geometry}
-        material={node.material}
-        position={node.position}
-        rotation={node.rotation}
-        scale={node.scale}
-        castShadow
-        receiveShadow
-        
-        >
-            {isOutlined && <Outlines thickness={outlinethickness} color={outlineColor}/>}
-        </mesh>
-      )
-    )}
+      {Object.values(nodes).map((node, index) => 
+      
+        node.isMesh && (
+          <mesh
+          key={index}
+          geometry={node.geometry}
+          material={node.material}
+          position={node.position}
+          rotation={node.rotation}
+          scale={node.scale}
+          castShadow
+          receiveShadow
+          
+          >
+              {isOutlined && <Outlines thickness={outlinethickness} color={outlineColor}/>}
+          </mesh>
+        )
+      )}
     
   </group>
   );
@@ -110,7 +121,7 @@ function SelectionTransform({ selectedModelId }: { selectedModelId: string | nul
 }
 
 
-export default function ModelViewer({ models, bgColor, pixelSize, selectedModelId, useOrtho }: Props ) {
+export default function ModelViewer({ models, setModels, bgColor, pixelSize, selectedModelId, useOrtho }: Props ) {
   const transformControlsRef = useRef<any>(null);
 
     return (
@@ -141,13 +152,15 @@ export default function ModelViewer({ models, bgColor, pixelSize, selectedModelI
             outlineColor={model.outlineColor}
 
             isOutlined={model.isOutline} // dynamic outlines!
+
+            modelTransform={model.transformation}
           />
         </Suspense>
       ) : null
     )}
 
     {selectedModelId && (
-      <ModelControl selectedModelId={selectedModelId}/>
+      <ModelControl selectedModelId={selectedModelId} models={models} setModels={setModels}/>
     )}
     
     {/* <OrbitControls /> */}

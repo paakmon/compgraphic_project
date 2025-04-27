@@ -27,11 +27,19 @@ export default function RootLayout({
       {
         _id: 'preload-1',
         name: 'Simple Cheeseburger by Erik Woods',
-        isVisible: true,
         url: '/cheeseburger.glb',
+
+        isVisible: true,
+        
         isOutline: false,
         outLineThickness: 13,
-        outlineColor : "#1b261e"
+        outlineColor : "#1b261e",
+
+        transformation: {
+          position: [0, 0, 0],
+          rotation: [0, 0, 0],
+          scale: [1, 1, 1],
+        },
       },
   ]);
 
@@ -46,8 +54,12 @@ export default function RootLayout({
       isVisible: true,
       isOutline:false,
       outLineThickness: 15,
-        outlineColor : "#1b261e"
-      
+      outlineColor : "#1b261e",
+      transformation: {
+        position: [0, 0, 0],
+        rotation: [0, 0, 0],
+        scale: [1, 1, 1],
+      },
     };
     setModels((prev) => [...prev, newModel]);
     
@@ -58,6 +70,7 @@ export default function RootLayout({
       <body>
         <ModelViewer
           models={models}
+          setModels={setModels}
           selectedModelId={selectedModelId}
           setSelectedModelId={setSelectedModelId}
           bgColor={bgColor} 
