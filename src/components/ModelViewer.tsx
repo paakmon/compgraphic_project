@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import * as THREE from "three";
 import { Canvas, useThree } from "@react-three/fiber";
-import { OrbitControls, useGLTF } from "@react-three/drei";
+import { OrbitControls, useGLTF, TransformControls } from "@react-three/drei";
 import { Suspense, useRef } from "react";
 import { EffectComposer, Pixelation, Selection, Outline } from "@react-three/postprocessing";
 import { ModelItem } from "@/interface";
@@ -29,10 +29,14 @@ function ModelLoader({ url, name, isOutlined, outlinethickness, outlineColor }: 
   outlinethickness: number;
   outlineColor: string;
 }) {
-  const ref = useRef();
+  const ref = useRef<THREE.Group>(null!);
   const { nodes, materials } = useGLTF(url);
- console.log("nodes", nodes);
- console.log("material", materials);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.name = name; // set group name
+    }
+  }, [name]);
 
   return (
     <group ref={ref}>
@@ -58,6 +62,7 @@ function ModelLoader({ url, name, isOutlined, outlinethickness, outlineColor }: 
   </group>
   );
 }
+
 function CameraChecker() {
   const { camera } = useThree();
 
@@ -84,11 +89,30 @@ function PixelatedEffect({ pixelSize }: { pixelSize: number }) {
   );
 }
 
-export default function ModelViewer({ models, bgColor, pixelSize, useOrtho }: Props ) {
+function SelectionTransform({ selectedModelId }: { selectedModelId: string | null }) {
+  const transform = useRef<any>(null);
+  const { scene } = useThree();
 
-  
- 
- 
+  useEffect(() => {
+    if (selectedModelId) {
+      const object = scene.getObjectByName(selectedModelId);
+      if (object && transform.current) {
+        transform.current.attach(object);
+      }
+    } else {
+      if (transform.current) {
+        transform.current.detach();
+      }
+    }
+  }, [selectedModelId, scene]);
+
+  return <TransformControls ref={transform} />;
+}
+
+
+export default function ModelViewer({ models, bgColor, pixelSize, selectedModelId, useOrtho }: Props ) {
+  const transformControlsRef = useRef<any>(null);
+
     return (
       <div style={{ width: "100vw", height: "100vh", position: "fixed", top: 0, left: 0, zIndex: 0, pointerEvents: "auto", overflow: "hidden" }}>
   <Canvas
@@ -121,6 +145,7 @@ export default function ModelViewer({ models, bgColor, pixelSize, useOrtho }: Pr
       ) : null
     )}
 
+    <SelectionTransform selectedModelId={selectedModelId} />
     <OrbitControls />
     <PixelatedEffect pixelSize={pixelSize} />
   </Canvas>
