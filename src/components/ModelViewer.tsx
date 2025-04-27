@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as THREE from "three";
 import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls, useGLTF, TransformControls } from "@react-three/drei";
@@ -8,8 +8,7 @@ import { EffectComposer, Pixelation, Selection, Outline } from "@react-three/pos
 import { ModelItem } from "@/interface";
 import {  useAnimations, Outlines, Environment } from '@react-three/drei'
 import CameraControls from "@/controls/CameraControls";
-
-
+import ModelControl from "@/controls/ModelControl";
 
 type Props = {
   models: ModelItem[];
@@ -148,7 +147,7 @@ export default function ModelViewer({ models, bgColor, pixelSize, selectedModelI
     )}
 
     {selectedModelId && (
-      <SelectionTransform selectedModelId={selectedModelId} />
+      <ModelControl selectedModelId={selectedModelId}/>
     )}
     
     {/* <OrbitControls /> */}
