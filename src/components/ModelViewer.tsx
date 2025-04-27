@@ -7,6 +7,7 @@ import { Suspense, useRef } from "react";
 import { EffectComposer, Pixelation, Selection, Outline } from "@react-three/postprocessing";
 import { ModelItem } from "@/interface";
 import {  useAnimations, Outlines, Environment } from '@react-three/drei'
+import CameraControls from "@/controls/CameraControls";
 
 
 
@@ -124,6 +125,7 @@ export default function ModelViewer({ models, bgColor, pixelSize, selectedModelI
     }}
   >
     <CameraChecker />
+    <CameraControls />  
     <color attach="background" args={[bgColor]} />
     <ambientLight intensity={0.6} />
     <directionalLight position={[2, 2, 2]} intensity={1} />
@@ -145,8 +147,11 @@ export default function ModelViewer({ models, bgColor, pixelSize, selectedModelI
       ) : null
     )}
 
-    <SelectionTransform selectedModelId={selectedModelId} />
-    <OrbitControls />
+    {selectedModelId && (
+      <SelectionTransform selectedModelId={selectedModelId} />
+    )}
+    
+    {/* <OrbitControls /> */}
     <PixelatedEffect pixelSize={pixelSize} />
   </Canvas>
 </div>
