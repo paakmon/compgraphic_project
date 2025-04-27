@@ -81,17 +81,19 @@ function ModelManager({ models, setModels, selectedModelId, setSelectedModelId, 
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
-        <nav className={isOpen ? 'rnav-menu active' : 'rnav-menu'}>
-          <div className='rnav-menu-items'>
-            <div className='rnavbar-toggle' onClick={onClose}>
-              <Link href='#' className='rmenu-bars'>
+        <nav className={(isOpen ? 'rnav-menu active' : 'rnav-menu') + " h-screen"}>
+          <div className="rnav-menu-items flex flex-col h-full">
+            <div className="rnavbar-toggle" onClick={onClose}>
+              <Link href="#" className="rmenu-bars">
                 <AiIcons.AiOutlineClose style={{ color: '#1E3A8A' }} />
               </Link>
             </div>
-            <div className='px-6'>
+
+            {/* Scrollable Area */}
+            <div className="px-6 flex-1 overflow-y-auto">
               <h2 className="text-2xl font-semibold text-blue-900">Model Manager</h2>
-              <Divider/>
-              {/* Map model list to ModelCard components */}
+              <Divider />
+
               {models.map((model) => (
                 <ModelCard
                   key={model._id}
@@ -100,12 +102,11 @@ function ModelManager({ models, setModels, selectedModelId, setSelectedModelId, 
                   isSelected={selectedModelId === model._id}
                   onVisibilityChange={handleVisibilityChange}
                   onDelete={deleteModel}
-                  onOutlineChange = {handleOutlineChange}
-                  onOutlineThicknessChange = {handleOutlineThicknessChange }
-                  onOutlineColorChangle = {handleOutlineColorChange}
+                  onOutlineChange={handleOutlineChange}
+                  onOutlineThicknessChange={handleOutlineThicknessChange}
+                  onOutlineColorChangle={handleOutlineColorChange}
                 />
               ))}
-              
             </div>
           </div>
         </nav>
