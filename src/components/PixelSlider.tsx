@@ -1,3 +1,11 @@
+/**
+ *  PixelSlider component
+ * 
+ * This component allows users to adjust the pixel size of a 3D model,
+ * calculating the pixel size based on the screen size.
+ *
+ */
+
 "use client";
 
 import { Slider } from "@mui/material";

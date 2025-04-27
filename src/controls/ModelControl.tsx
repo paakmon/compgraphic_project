@@ -1,15 +1,26 @@
+/**
+ * ModelControl component
+ *
+ * This component lets users control the selected 3D model in the scene via the TransformControls.
+ * It allows users to translate, rotate, or scale the model using keyboard shortcuts:
+ * - 1: Translate
+ * - 2: Rotate
+ * - 3: Scale
+ * and also updates the model's transformation properties (position, rotation, scale).
+ * 
+ */
+
 import { useEffect, useRef, useState } from 'react';
 import { useThree } from '@react-three/fiber';
 import { TransformControls } from '@react-three/drei';
 import { ModelItem } from '@/interface';
 
 type ModelControlProps = {
-  models: ModelItem[];
   setModels: React.Dispatch<React.SetStateAction<ModelItem[]>>;
   selectedModelId: string | null;
 };
 
-export default function ModelControl({ models, setModels, selectedModelId }: ModelControlProps) {
+export default function ModelControl({ setModels, selectedModelId }: ModelControlProps) {
   const transform = useRef<any>(null);
   const { scene } = useThree();
   const [mode, setMode] = useState<'translate' | 'rotate' | 'scale'>('translate');
@@ -33,7 +44,7 @@ export default function ModelControl({ models, setModels, selectedModelId }: Mod
       if (object && transform.current) {
         transform.current.attach(object);
 
-        // Listen for changes when user moves/rotates/scales
+        // Update models transformation on change
         const controls = transform.current;
         const handleChange = () => {
           setModels(prevModels => 
@@ -53,15 +64,14 @@ export default function ModelControl({ models, setModels, selectedModelId }: Mod
           );
         };
 
+        // Listen for changes when user moves/rotates/scales
         controls.addEventListener('objectChange', handleChange);
-
         controls.addEventListener('mouseUp', handleChange);
         controls.addEventListener('dragend', handleChange);
 
         // Cleanup on detach
         return () => {
           controls.removeEventListener('objectChange', handleChange);
-
           controls.addEventListener('mouseUp', handleChange);
           controls.addEventListener('dragend', handleChange);
         };

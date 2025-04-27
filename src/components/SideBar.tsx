@@ -32,7 +32,7 @@ import { Instructions } from "./Instructions";
 import { Divider } from "./Divider";
 import { BackgroundColor } from "./BackgroundColor";
 import { PixelSlider } from './PixelSlider';
-import CameratypeChang from './cameratypeChang';
+import OrthoCamera from './OrthoCamera';
 
 
 type SideBarProps = {
@@ -64,18 +64,15 @@ function SideBar({ setBgColor, setPixelSize, pixelSize, isOpen, onClose, useOrth
               <UploadButton
                 onFileSelect={onFileSelect}
               />
+              
               <Instructions/>
               <Divider/>
-              <div className="flex flex-col items-start w-full gap-2">
+              <div className="flex flex-col items-start w-full">
                 <PixelSlider pixelSize={pixelSize} setPixelSize={setPixelSize}/>
-              </div>
-              <div>
-                <Divider />
+                <OrthoCamera useOrtho={useOrtho} setUseOrtho={SetOrtho}/>
                 <BackgroundColor setBgColor={setBgColor}/>
               </div>
-              <div>
-              <CameratypeChang useotho={useOrtho} setuseotho={SetOrtho}></CameratypeChang>
-              </div>
+
             </div>
           </div>
         </nav>

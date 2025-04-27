@@ -1,10 +1,21 @@
+/**
+ * CameraControl component
+ *
+ * This component lets users control the scene camera via keyboard input.
+ * - W/S: Move up/down
+ * - A/D: Move left/right
+ * - Q/E: Rotate left/right
+ * - I/O: Zoom in/out
+ * 
+ */
+
 "use client";
 
 import { useEffect } from "react";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
-export default function CameraControls() {
+export default function CameraControl() {
   const { camera } = useThree();
 
   useEffect(() => {

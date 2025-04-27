@@ -7,7 +7,7 @@ import { Suspense, useRef } from "react";
 import { EffectComposer, Pixelation, Selection, Outline } from "@react-three/postprocessing";
 import { ModelItem } from "@/interface";
 import {  useAnimations, Outlines, Environment } from '@react-three/drei'
-import CameraControls from "@/controls/CameraControls";
+import CameraControl from "@/controls/CameraControl";
 import ModelControl from "@/controls/ModelControl";
 
 type Props = {
@@ -135,7 +135,7 @@ export default function ModelViewer({ models, setModels, bgColor, pixelSize, sel
     }}
   >
     <CameraChecker />
-    <CameraControls />  
+    <CameraControl />  
     <color attach="background" args={[bgColor]} />
     <ambientLight intensity={0.6} />
     <directionalLight position={[2, 2, 2]} intensity={1} />
@@ -160,7 +160,7 @@ export default function ModelViewer({ models, setModels, bgColor, pixelSize, sel
     )}
 
     {selectedModelId && (
-      <ModelControl selectedModelId={selectedModelId} models={models} setModels={setModels}/>
+      <ModelControl selectedModelId={selectedModelId} setModels={setModels}/>
     )}
     
     {/* <OrbitControls /> */}
