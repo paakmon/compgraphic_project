@@ -5,7 +5,11 @@ Built using Next.js, React Three Fiber, and Tailwind CSS.
 
 Upload, view, manage, and customize 3D models in a pixel-style aesthetic!
 
-## How to Run Locally
+## How to use
+
+go to -link-
+
+or run locally
 
 Clone the repository
 

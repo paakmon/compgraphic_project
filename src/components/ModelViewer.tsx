@@ -25,6 +25,27 @@ type Props = {
   useOrtho: boolean;
 };
 
+type GLTFResult = {
+  nodes: {
+    [nodeName: string]: THREE.Object3D & {
+      geometry?: THREE.BufferGeometry;
+      material?: THREE.Material | THREE.Material[];
+      isMesh?: boolean;
+    };
+  };
+  materials: {
+    [materialName: string]: THREE.Material;
+  };
+  // Include other properties that might come from useGLTF
+  scene: THREE.Group;
+  scenes: THREE.Group[];
+  animations: THREE.AnimationClip[];
+  asset: {
+    generator: string;
+    version: string;
+  };
+};
+
 function ModelLoader({
   url,
   name,
@@ -45,7 +66,8 @@ function ModelLoader({
   };
 }) {
   const ref = useRef<THREE.Group>(null!);
-  const { nodes } = useGLTF(url);
+  const gltf = useGLTF(url) as unknown as GLTFResult;
+  const { nodes } = gltf;
 
   useEffect(() => {
     if (ref.current) {

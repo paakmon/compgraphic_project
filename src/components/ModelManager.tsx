@@ -37,7 +37,11 @@ function ModelManager({
   onClose,
 }: ModelManagerProps) {
   const handleSelect = (id: string) => {
-    setSelectedModelId((prevSelectedId) => (prevSelectedId === id ? null : id));
+    if (selectedModelId === id) {
+      setSelectedModelId(null); // Deselect
+    } else {
+      setSelectedModelId(id); // Select new model
+    }
   };
 
   const handleVisibilityChange = (id: string) => {

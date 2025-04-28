@@ -17,7 +17,7 @@ type OrthoCameraToggleProps = {
 
 function OrthoCameraToggle({ useOrtho, setUseOrtho }: OrthoCameraToggleProps) {
   // Handle checkbox change
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUseOrtho(event.target.checked);
   };
 
