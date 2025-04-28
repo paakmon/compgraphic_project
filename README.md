@@ -17,8 +17,8 @@ cd compgraphic_project
 Install dependencies and Start the development server
 
 ```bash
-git clone https://github.com/your-username/pixel-renderer.git
-cd pixel-renderer
+npm install
+npm run dev
 ```
 
 Open your browser and go to http://localhost:3000
