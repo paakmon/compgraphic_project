@@ -6,7 +6,7 @@
  * - A/D: Move left/right
  * - Q/E: Rotate left/right
  * - I/O: Zoom in/out
- * 
+ *
  */
 
 "use client";

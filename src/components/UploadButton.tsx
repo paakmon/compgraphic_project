@@ -8,7 +8,7 @@
  * Used for triggering file uploads from components like sidebars.
  */
 
-import React, { useRef } from 'react';
+import React, { useRef } from "react";
 
 type UploadButtonProps = {
   onFileSelect: (file: File) => void;

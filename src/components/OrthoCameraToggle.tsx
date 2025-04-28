@@ -1,5 +1,5 @@
 /**
- *  OrthoCamera component
+ *  OrthoCameraToggle component
  *
  * Changes the camera mode between orthographic and perspective.
  * Provides a checkbox to toggle the mode.
@@ -10,17 +10,16 @@
 
 import { Checkbox } from "@mui/material";
 
-type OrthoCameraProps = {
+type OrthoCameraToggleProps = {
   useOrtho: boolean;
   setUseOrtho: (value: boolean) => void;
 };
 
-function OrthoCamera({ useOrtho, setUseOrtho }: OrthoCameraProps) {
-
+function OrthoCameraToggle({ useOrtho, setUseOrtho }: OrthoCameraToggleProps) {
   // Handle checkbox change
   const handleChange = (event) => {
-    setUseOrtho(event.target.checked)
-  }
+    setUseOrtho(event.target.checked);
+  };
 
   return (
     <div className="w-60">
@@ -32,4 +31,4 @@ function OrthoCamera({ useOrtho, setUseOrtho }: OrthoCameraProps) {
   );
 }
 
-export default OrthoCamera;
+export default OrthoCameraToggle;
